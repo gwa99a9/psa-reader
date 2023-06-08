@@ -1,10 +1,10 @@
-# Project Title
+# psa-reader
 
 The Torrent Search project is a web application that allows users to search for and explore a wide range of torrents. It provides a user-friendly interface for searching torrents based on keywords, retrieving detailed information about each torrent, and accessing download links. The project aims to simplify the process of finding and accessing torrents by aggregating data from various torrent sources and presenting it in a centralized platform. Whether you are looking for movies, TV shows, music, or software, the Torrent Search project is designed to help you discover and download torrents with ease.
 
 ## Table of Contents
 
-- [Project Title](#project-title)
+- [psa-reader](#psa-reader)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -24,13 +24,13 @@ Follow these steps to get the project up and running:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/your-username/psa-reader.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd your-project/
+   cd psa-reader/
    ```
 
 3. Create a virtual environment (optional but recommended):
@@ -104,7 +104,7 @@ Follow these steps to use the project effectively:
 
 13. Customize the project according to your needs by modifying the HTML, CSS, and JavaScript files.
 
-14. Feel free to contribute to the project by [reporting issues](https://github.com/your-username/your-project/issues) or [submitting pull requests](https://github.com/your-username/your-project/pulls).
+14. Feel free to contribute to the project by [reporting issues](https://github.com/your-username/psa-reader/issues) or [submitting pull requests](https://github.com/your-username/psa-reader/pulls).
 
 15. Enjoy using the Torrent Search application!
 
@@ -173,7 +173,7 @@ Feel free to experiment with different search queries and integrate the API endp
 Thank you for your interest in contributing to the Torrent Search project! We welcome contributions from the community to help improve and enhance the project. To contribute, please follow the guidelines below:
 
 ### Reporting Issues
-If you encounter any issues or bugs while using the Torrent Search application, please report them by opening an issue on the [GitHub issue tracker](https://github.com/your-username/your-repository/issues). When reporting issues, please provide as much detail as possible, including steps to reproduce the problem and any error messages or screenshots.
+If you encounter any issues or bugs while using the Torrent Search application, please report them by opening an issue on the [GitHub issue tracker](https://github.com/your-username/psa-reader/issues). When reporting issues, please provide as much detail as possible, including steps to reproduce the problem and any error messages or screenshots.
 
 ### Submitting Pull Requests
 We encourage you to submit pull requests for any enhancements, bug fixes, or new features you would like to contribute to the project. Here are the steps to submit a pull request:
