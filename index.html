@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Torrent Search</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <style>
+        .loading-indicator {
+            display: none;
+            text-align: center;
+        }
+        .loading-indicator img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Torrent Search</h1>
+    <form id="searchForm">
+        <input type="text" class="form-control" id="searchInput" name="search" placeholder="Enter a name">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-secondary clear-button">Clear</button>
+    </form>
+
+    <div class="loading-indicator">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading...">
+    </div>
+    
+    <table id="searchResultsTable" class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Size</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+    
+    <script>
+        var searchForm = document.getElementById('searchForm');
+        var searchInput = document.getElementById('searchInput');
+        var searchResultsTable = document.getElementById('searchResultsTable');
+        var loadingIndicator = document.querySelector('.loading-indicator');
+        var clearButton = document.querySelector('.clear-button');
+        var dataTable;
+        
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var searchTerm = searchInput.value;
+            
+            // Clear previous search results
+            clearSearchResults();
+            
+            // Send API request to server
+            fetch('http://localhost:8000/search=' + searchTerm)
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error: ' + response.status);
+                    }
+                })
+                .then(function(data) {
+                    // Populate search results table
+                    if (data.length > 0) {
+                        data.forEach(function(result) {
+                            var row = createResultRow(result);
+                            dataTable.row.add(row).draw();
+                        });
+                    } else {
+                        displayNoResultsMessage();
+                    }
+                })
+                .catch(function(error) {
+                    displayErrorMessage(error);
+                })
+                .finally(function() {
+                    hideLoadingIndicator();
+                });
+            
+            showLoadingIndicator();
+        });
+        
+        clearButton.addEventListener('click', function() {
+            clearSearchResults();
+            searchInput.value = '';
+        });
+        
+        function createResultRow(result) {
+            var row = document.createElement('tr');
+
+            var idCell = document.createElement('td');
+            idCell.textContent = result[0];
+            row.appendChild(idCell);
+
+            var nameCell = document.createElement('td');
+            nameCell.textContent = result[1];
+            row.appendChild(nameCell);
+
+            var urlCell = document.createElement('td');
+            var link = document.createElement('a');
+            link.href = "https://1337x.to" + result[2];
+            link.textContent = result[2];
+            link.target = '_blank'; // Open link in a new tab
+            urlCell.appendChild(link);
+            row.appendChild(urlCell);
+
+            var sizeCell = document.createElement('td');
+            sizeCell.textContent = result[3];
+            row.appendChild(sizeCell);
+
+            var dateCell = document.createElement('td');
+            dateCell.textContent = result[6];
+            row.appendChild(dateCell);
+
+            return row;
+        }
+
+        function clearSearchResults() {
+            dataTable.clear().draw();
+        }
+
+        function displayNoResultsMessage() {
+            dataTable.row.add([
+                '<td colspan="5">No results found.</td>',
+                '', '', '', ''
+            ]).draw();
+        }
+
+        function displayErrorMessage(error) {
+            dataTable.row.add([
+                '<td colspan="5">Error: ' + error.message + '</td>',
+                '', '', '', ''
+            ]).draw();
+        }
+
+        function showLoadingIndicator() {
+            loadingIndicator.style.display = 'block';
+        }
+
+        function hideLoadingIndicator() {
+            loadingIndicator.style.display = 'none';
+        }
+
+        // Initialize DataTables
+        dataTable = $(searchResultsTable).DataTable({
+            paging: false,
+            searching: false,
+            info: false,
+            columnDefs: [
+                { targets: [2], orderable: false } // Disable sorting for URL column
+            ]
+        });
+    </script>
+</body>
+</html>
+
