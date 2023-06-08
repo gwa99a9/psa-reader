@@ -38,4 +38,6 @@ develop-eggs/
 *~
 
 # Ignore the database file if applicable
-database.db
+torrents.db
+
+
