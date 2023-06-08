@@ -40,4 +40,6 @@ develop-eggs/
 # Ignore the database file if applicable
 torrents.db
 
+# Ignore the log file if applicable
+app.log
 
